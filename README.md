@@ -61,6 +61,10 @@ Acesse o Swagger UI em: **[https://localhost:7161/swagger](https://localhost:716
 
 ## Rotas e Endpoints Principais
 
+## Observação
+
+> **⚠️ Importante**: nos requests de **POST** e **PUT**, **não inclua** as propriedades de chave primária (os campos `Id...`) no corpo JSON. O servidor irá gerar/identificar automaticamente o ID. 😊
+
 ### Motos
 
 * `GET    /motos`                     → Lista todas as motos
