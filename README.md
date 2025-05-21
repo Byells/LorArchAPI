@@ -37,7 +37,7 @@ A **LorArch API** é uma aplicação minimalista em **ASP.NET Core (.NET 9.0)** 
      ```json
      {
        "ConnectionStrings": {
-         "OracleDb": "User Id=SEU_USUARIO;Password=SUA_SENHA;Data Source=oracle.fiap.com.br:1521/orcl"
+         "OracleDb": "User Id=SEU_USUARIO;Password=SUA_SENHA;Data Source=HOST:1521/SERVICE_NAME"
        }
      }
      ```
