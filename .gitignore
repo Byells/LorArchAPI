@@ -1,0 +1,16 @@
+﻿# Rider & Visual Studio
+.idea/
+*.suo
+*.user
+*.userosscache
+
+# Build output
+bin/
+obj/
+
+# Local settings
+appsettings.Development.json
+
+# OS junk
+.DS_Store
+Thumbs.db
