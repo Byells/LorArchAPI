@@ -8,6 +8,7 @@ namespace LorArchApi.Endpoints;
 
 public static class EstadoEndpoints
 {
+    const String Estados = "Estados";
     public static WebApplication MapEstadoEndpoints(this WebApplication app)
     {
         app.MapGet("/estados", async (string? sigla, ApplicationDbContext db) =>
@@ -19,7 +20,7 @@ public static class EstadoEndpoints
                 }
             )
             .WithName("GetEstados")
-            .WithTags("Estados")
+            .WithTags(Estados)
             .Produces<List<Estado>>(StatusCodes.Status200OK)
             .WithSummary("Listar estados")
             .WithDescription("Retorna todos os estados, opcionalmente filtrados por `sigla`.");
@@ -31,7 +32,7 @@ public static class EstadoEndpoints
                         : Results.NotFound()
             )
             .WithName("GetEstadoById")
-            .WithTags("Estados")
+            .WithTags(Estados)
             .Produces<Estado>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter estado por ID")
@@ -45,7 +46,7 @@ public static class EstadoEndpoints
                 }
             )
             .WithName("CreateEstado")
-            .WithTags("Estados")
+            .WithTags(Estados)
             .Accepts<Estado>("application/json")
             .Produces<Estado>(StatusCodes.Status201Created)
             .WithSummary("Criar estado")
@@ -62,7 +63,7 @@ public static class EstadoEndpoints
                 }
             )
             .WithName("UpdateEstado")
-            .WithTags("Estados")
+            .WithTags(Estados)
             .Accepts<Estado>("application/json")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
@@ -79,7 +80,7 @@ public static class EstadoEndpoints
                 }
             )
             .WithName("DeleteEstado")
-            .WithTags("Estados")
+            .WithTags(Estados)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir estado")

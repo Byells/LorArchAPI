@@ -10,11 +10,12 @@ public static class DefeitoMotoEndpoints
 {
     public static WebApplication MapDefeitoMotoEndpoints(this WebApplication app)
     {
+        const String DefeitosMoto = "DefeitosMoto";
         app.MapGet("/defeitos-moto", async (ApplicationDbContext db) =>
                 Results.Ok(await db.DefeitoMotos.ToListAsync())
             )
             .WithName("GetDefeitosMoto")
-            .WithTags("DefeitosMoto")
+            .WithTags(DefeitosMoto)
             .Produces<List<DefeitoMoto>>(StatusCodes.Status200OK)
             .WithSummary("Listar defeitos de moto")
             .WithDescription("Retorna todos os registros de defeito atribuídos a motos.");
@@ -26,7 +27,7 @@ public static class DefeitoMotoEndpoints
                         : Results.NotFound()
             )
             .WithName("GetDefeitoMotoById")
-            .WithTags("DefeitosMoto")
+            .WithTags(DefeitosMoto)
             .Produces<DefeitoMoto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter defeito de moto por ID")
@@ -44,7 +45,7 @@ public static class DefeitoMotoEndpoints
                 }
             )
             .WithName("CreateDefeitoMoto")
-            .WithTags("DefeitosMoto")
+            .WithTags(DefeitosMoto)
             .Accepts<DefeitoMoto>("application/json")
             .Produces<DefeitoMoto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
@@ -68,7 +69,7 @@ public static class DefeitoMotoEndpoints
                 }
             )
             .WithName("UpdateDefeitoMoto")
-            .WithTags("DefeitosMoto")
+            .WithTags(DefeitosMoto)
             .Accepts<DefeitoMoto>("application/json")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status400BadRequest)
@@ -86,7 +87,7 @@ public static class DefeitoMotoEndpoints
                 }
             )
             .WithName("DeleteDefeitoMoto")
-            .WithTags("DefeitosMoto")
+            .WithTags(DefeitosMoto)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir defeito de moto")

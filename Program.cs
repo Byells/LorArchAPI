@@ -42,4 +42,4 @@ app.MapLocalizacaoEndpoints();
 app.MapLoraEndpoints();
 app.MapRfidEndpoints();
 
-app.Run();
+await app.RunAsync();

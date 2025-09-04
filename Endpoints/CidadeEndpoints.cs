@@ -10,6 +10,8 @@ public static class CidadeEndpoints
 {
     public static WebApplication MapCidadeEndpoints(this WebApplication app)
     {
+        const String Cidades = "Cidades";
+        
         app.MapGet("/cidades", async (int? estadoId, string? nome, ApplicationDbContext db) =>
                 {
                     var q = db.Cidades.AsQueryable();
@@ -19,7 +21,7 @@ public static class CidadeEndpoints
                 }
             )
             .WithName("GetCidades")
-            .WithTags("Cidades")
+            .WithTags(Cidades)
             .Produces<List<Cidade>>(StatusCodes.Status200OK)
             .WithSummary("Listar cidades")
             .WithDescription("Retorna todas as cidades, opcionalmente filtradas por `estadoId` ou `nome`.");
@@ -31,7 +33,7 @@ public static class CidadeEndpoints
                         : Results.NotFound()
             )
             .WithName("GetCidadeById")
-            .WithTags("Cidades")
+            .WithTags(Cidades)
             .Produces<Cidade>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter cidade por ID")
@@ -47,7 +49,7 @@ public static class CidadeEndpoints
                 }
             )
             .WithName("CreateCidade")
-            .WithTags("Cidades")
+            .WithTags(Cidades)
             .Accepts<Cidade>("application/json")
             .Produces<Cidade>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
@@ -67,7 +69,7 @@ public static class CidadeEndpoints
                 }
             )
             .WithName("UpdateCidade")
-            .WithTags("Cidades")
+            .WithTags(Cidades)
             .Accepts<Cidade>("application/json")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status400BadRequest)
@@ -85,7 +87,7 @@ public static class CidadeEndpoints
                 }
             )
             .WithName("DeleteCidade")
-            .WithTags("Cidades")
+            .WithTags(Cidades)
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir cidade")
