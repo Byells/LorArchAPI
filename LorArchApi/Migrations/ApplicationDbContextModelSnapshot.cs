@@ -39,7 +39,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdCidade");
 
-                    b.ToTable("Cidades");
+                    b.ToTable("Cidades", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Defeito", b =>
@@ -60,7 +60,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdDefeito");
 
-                    b.ToTable("Defeitos");
+                    b.ToTable("Defeitos", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.DefeitoMoto", b =>
@@ -85,7 +85,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdDefeitoMoto");
 
-                    b.ToTable("DefeitoMotos");
+                    b.ToTable("DefeitoMotos", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Estado", b =>
@@ -106,7 +106,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdEstado");
 
-                    b.ToTable("Estados");
+                    b.ToTable("Estados", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.HistoricoManutencao", b =>
@@ -131,7 +131,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdMovimentacao");
 
-                    b.ToTable("HistoricoManutencoes");
+                    b.ToTable("HistoricoManutencoes", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Localizacao", b =>
@@ -158,7 +158,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdLocalizacao");
 
-                    b.ToTable("Localizacoes");
+                    b.ToTable("Localizacoes", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Lora", b =>
@@ -177,7 +177,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdLora");
 
-                    b.ToTable("Loras");
+                    b.ToTable("Loras", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Manutencao", b =>
@@ -207,7 +207,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdManutencao");
 
-                    b.ToTable("Manutencoes");
+                    b.ToTable("Manutencoes", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Moto", b =>
@@ -241,7 +241,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdMoto");
 
-                    b.ToTable("Motos");
+                    b.ToTable("Motos", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Rfid", b =>
@@ -260,7 +260,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdRfid");
 
-                    b.ToTable("Rfids");
+                    b.ToTable("Rfids", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Setor", b =>
@@ -280,7 +280,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdSetor");
 
-                    b.ToTable("Setores");
+                    b.ToTable("Setores", (string)null);
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Unidade", b =>
@@ -300,7 +300,49 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdUnidade");
 
-                    b.ToTable("Unidades");
+                    b.ToTable("Unidades", (string)null);
+                });
+
+            modelBuilder.Entity("LorArchApi.Models.Usuario", b =>
+                {
+                    b.Property<int>("IdUsuario")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
+
+                    b.Property<int>("Ativo")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("TIMESTAMP(7)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("NVARCHAR2(255)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)");
+
+                    b.Property<DateTime?>("UltimoLogin")
+                        .HasColumnType("TIMESTAMP(7)");
+
+                    b.HasKey("IdUsuario");
+
+                    b.ToTable("Usuarios", (string)null);
                 });
 #pragma warning restore 612, 618
         }

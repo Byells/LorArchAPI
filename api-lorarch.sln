@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LorArchApi", "LorArchApi\LorArchApi.csproj", "{3669F803-6617-4AF6-BBF8-905826AA67C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LorArchApi.Tests", "LorArchApi.Tests\LorArchApi.Tests.csproj", "{2877D88A-62EF-44EB-A870-9755BA84C3C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3669F803-6617-4AF6-BBF8-905826AA67C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3669F803-6617-4AF6-BBF8-905826AA67C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3669F803-6617-4AF6-BBF8-905826AA67C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3669F803-6617-4AF6-BBF8-905826AA67C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2877D88A-62EF-44EB-A870-9755BA84C3C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2877D88A-62EF-44EB-A870-9755BA84C3C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2877D88A-62EF-44EB-A870-9755BA84C3C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2877D88A-62EF-44EB-A870-9755BA84C3C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

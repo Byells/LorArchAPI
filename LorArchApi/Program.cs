@@ -5,8 +5,11 @@ using LorArchApi.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(opts =>
-    opts.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
+if (!builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<ApplicationDbContext>(opts =>
+        opts.UseOracle(builder.Configuration.GetConnectionString("OracleDb")));
+}
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -43,3 +46,4 @@ app.MapLoraEndpoints();
 app.MapRfidEndpoints();
 
 await app.RunAsync();
+public partial class Program { };
