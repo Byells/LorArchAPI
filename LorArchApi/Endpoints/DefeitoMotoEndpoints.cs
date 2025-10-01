@@ -18,7 +18,8 @@ public static class DefeitoMotoEndpoints
             .WithTags(DefeitosMotoTag)
             .Produces<PaginatedResponse<DefeitoMotoDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar defeitos de moto")
-            .WithDescription("Retorna registros paginados de defeitos de motos, opcionalmente filtrados por `motoId` ou `defeitoId`.");
+            .WithDescription("Retorna registros paginados de defeitos de motos, opcionalmente filtrados por `motoId` ou `defeitoId`.")
+            .RequireAuthorization();
 
         app.MapGet("/defeitos-moto/{id:int}", GetDefeitoMotoById)
             .WithName("GetDefeitoMotoById")
@@ -26,7 +27,8 @@ public static class DefeitoMotoEndpoints
             .Produces<DefeitoMotoDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter defeito de moto por ID")
-            .WithDescription("Retorna o registro de defeito de moto correspondente ao `IdDefeitoMoto` informado.");
+            .WithDescription("Retorna o registro de defeito de moto correspondente ao `IdDefeitoMoto` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/defeitos-moto", CreateDefeitoMoto)
             .WithName("CreateDefeitoMoto")
@@ -35,7 +37,8 @@ public static class DefeitoMotoEndpoints
             .Produces<DefeitoMotoDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar defeito de moto")
-            .WithDescription("Cria um novo relacionamento de defeito para uma moto.");
+            .WithDescription("Cria um novo relacionamento de defeito para uma moto.")
+            .RequireAuthorization();
 
         app.MapPut("/defeitos-moto/{id:int}", UpdateDefeitoMoto)
             .WithName("UpdateDefeitoMoto")
@@ -45,7 +48,8 @@ public static class DefeitoMotoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar defeito de moto")
-            .WithDescription("Atualiza um registro de defeito de moto existente.");
+            .WithDescription("Atualiza um registro de defeito de moto existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/defeitos-moto/{id:int}", DeleteDefeitoMoto)
             .WithName("DeleteDefeitoMoto")
@@ -53,7 +57,8 @@ public static class DefeitoMotoEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir defeito de moto")
-            .WithDescription("Remove o registro de defeito de moto especificado.");
+            .WithDescription("Remove o registro de defeito de moto especificado.")
+            .RequireAuthorization();
 
         return app;
     }

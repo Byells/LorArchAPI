@@ -18,7 +18,8 @@ public static class EstadoEndpoints
             .WithTags(EstadosTag)
             .Produces<PaginatedResponse<EstadoDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar estados")
-            .WithDescription("Retorna estados paginados, opcionalmente filtrados por `sigla`.");
+            .WithDescription("Retorna estados paginados, opcionalmente filtrados por `sigla`.")
+            .RequireAuthorization();
 
         app.MapGet("/estados/{id:int}", GetEstadoById)
             .WithName("GetEstadoById")
@@ -26,7 +27,8 @@ public static class EstadoEndpoints
             .Produces<EstadoDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter estado por ID")
-            .WithDescription("Retorna o estado correspondente ao `IdEstado` informado.");
+            .WithDescription("Retorna o estado correspondente ao `IdEstado` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/estados", CreateEstado)
             .WithName("CreateEstado")
@@ -34,7 +36,8 @@ public static class EstadoEndpoints
             .Accepts<Estado>("application/json")
             .Produces<EstadoDto>(StatusCodes.Status201Created)
             .WithSummary("Criar estado")
-            .WithDescription("Cria um novo estado.");
+            .WithDescription("Cria um novo estado.")
+            .RequireAuthorization();
 
         app.MapPut("/estados/{id:int}", UpdateEstado)
             .WithName("UpdateEstado")
@@ -43,7 +46,8 @@ public static class EstadoEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar estado")
-            .WithDescription("Atualiza nome e sigla de um estado existente.");
+            .WithDescription("Atualiza nome e sigla de um estado existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/estados/{id:int}", DeleteEstado)
             .WithName("DeleteEstado")
@@ -51,7 +55,8 @@ public static class EstadoEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir estado")
-            .WithDescription("Remove o estado especificado.");
+            .WithDescription("Remove o estado especificado.")
+            .RequireAuthorization();
 
         return app;
     }

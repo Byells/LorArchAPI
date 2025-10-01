@@ -8,7 +8,7 @@ using Oracle.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace LorArchApi.Migrations
+namespace LocarchApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -17,7 +17,7 @@ namespace LorArchApi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("ProductVersion", "9.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             OracleModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -39,7 +39,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdCidade");
 
-                    b.ToTable("Cidades", (string)null);
+                    b.ToTable("Cidades");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Defeito", b =>
@@ -60,7 +60,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdDefeito");
 
-                    b.ToTable("Defeitos", (string)null);
+                    b.ToTable("Defeitos");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.DefeitoMoto", b =>
@@ -85,7 +85,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdDefeitoMoto");
 
-                    b.ToTable("DefeitoMotos", (string)null);
+                    b.ToTable("DefeitoMotos");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Estado", b =>
@@ -106,7 +106,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdEstado");
 
-                    b.ToTable("Estados", (string)null);
+                    b.ToTable("Estados");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.HistoricoManutencao", b =>
@@ -131,7 +131,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdMovimentacao");
 
-                    b.ToTable("HistoricoManutencoes", (string)null);
+                    b.ToTable("HistoricoManutencoes");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Localizacao", b =>
@@ -158,7 +158,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdLocalizacao");
 
-                    b.ToTable("Localizacoes", (string)null);
+                    b.ToTable("Localizacoes");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Lora", b =>
@@ -177,7 +177,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdLora");
 
-                    b.ToTable("Loras", (string)null);
+                    b.ToTable("Loras");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Manutencao", b =>
@@ -207,7 +207,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdManutencao");
 
-                    b.ToTable("Manutencoes", (string)null);
+                    b.ToTable("Manutencoes");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Moto", b =>
@@ -241,7 +241,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdMoto");
 
-                    b.ToTable("Motos", (string)null);
+                    b.ToTable("Motos");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Rfid", b =>
@@ -260,7 +260,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdRfid");
 
-                    b.ToTable("Rfids", (string)null);
+                    b.ToTable("Rfids");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Setor", b =>
@@ -280,7 +280,7 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdSetor");
 
-                    b.ToTable("Setores", (string)null);
+                    b.ToTable("Setores");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Unidade", b =>
@@ -300,49 +300,256 @@ namespace LorArchApi.Migrations
 
                     b.HasKey("IdUnidade");
 
-                    b.ToTable("Unidades", (string)null);
+                    b.ToTable("Unidades");
                 });
 
             modelBuilder.Entity("LorArchApi.Models.Usuario", b =>
                 {
-                    b.Property<int>("IdUsuario")
+                    b.Property<string>("Id")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR2(256)");
+
+                    b.Property<int>("EmailConfirmed")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<int>("LockoutEnabled")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR2(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR2(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<int>("PhoneNumberConfirmed")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<int>("TwoFactorEnabled")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR2(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("\"NormalizedUserName\" IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR2(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR2(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("\"NormalizedName\" IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdUsuario"));
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Ativo")
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("NUMBER(10)");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("TIMESTAMP(7)");
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Email")
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                        .HasColumnType("NVARCHAR2(450)");
 
-                    b.Property<string>("Nome")
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR2(100)");
+                        .HasColumnType("NVARCHAR2(450)");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("NVARCHAR2(255)");
+                    b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("NVARCHAR2(50)");
+                    b.HasIndex("UserId");
 
-                    b.Property<DateTime?>("UltimoLogin")
-                        .HasColumnType("TIMESTAMP(7)");
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
 
-                    b.HasKey("IdUsuario");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("NVARCHAR2(450)");
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.Property<string>("RoleId")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("NVARCHAR2(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("LorArchApi.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("LorArchApi.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LorArchApi.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("LorArchApi.Models.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

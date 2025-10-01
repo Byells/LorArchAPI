@@ -18,7 +18,8 @@ public static class MotoEndpoints
             .WithTags(MotosTag)
             .Produces<PaginatedResponse<MotoDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar todas as motos")
-            .WithDescription("Retorna uma lista paginada de todas as motos cadastradas, com filtros opcionais.");
+            .WithDescription("Retorna uma lista paginada de todas as motos cadastradas, com filtros opcionais.")
+            .RequireAuthorization();
 
         app.MapGet("/motos/{id:int}", GetMotoById)
             .WithName("GetMotoById")
@@ -26,7 +27,8 @@ public static class MotoEndpoints
             .Produces<MotoDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter moto por ID")
-            .WithDescription("Retorna a moto correspondente ao `IdMoto` informado.");
+            .WithDescription("Retorna a moto correspondente ao `IdMoto` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/motos", CreateMoto)
             .WithName("CreateMoto")
@@ -35,7 +37,8 @@ public static class MotoEndpoints
             .Produces<MotoDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar nova moto")
-            .WithDescription("Cria uma nova moto com os campos `Modelo`, `Placa`, `Status` e `IdSetor`.");
+            .WithDescription("Cria uma nova moto com os campos `Modelo`, `Placa`, `Status` e `IdSetor`.")
+            .RequireAuthorization();
 
         app.MapPut("/motos/{id:int}", UpdateMoto)
             .WithName("UpdateMoto")
@@ -45,7 +48,8 @@ public static class MotoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar moto")
-            .WithDescription("Atualiza os campos `Modelo`, `Placa`, `Status` e `IdSetor` de uma moto existente.");
+            .WithDescription("Atualiza os campos `Modelo`, `Placa`, `Status` e `IdSetor` de uma moto existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/motos/{id:int}", DeleteMoto)
             .WithName("DeleteMoto")
@@ -53,7 +57,8 @@ public static class MotoEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir moto")
-            .WithDescription("Remove a moto correspondente ao `IdMoto` informado.");
+            .WithDescription("Remove a moto correspondente ao `IdMoto` informado.")
+            .RequireAuthorization();
 
         return app;
     }

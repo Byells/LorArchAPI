@@ -1,65 +1,136 @@
-# LorArch API
+# LorArch API 🏍️
 
-## Descrição do Projeto
+---
 
-A **LorArch API** é uma aplicação minimalista em **ASP.NET Core (.NET 9.0)** para gerenciamento completo de frotas de motos em pátios. Ela oferece:
+API para o sistema de gerenciamento de frotas de motos, desenvolvida como parte do projeto da disciplina de _Advanced Business Development with .NET_.
 
-* CRUD de **Motos**, **Unidades**, **Setores**, **Cidades**, **Estados**, **Defeitos**, **DefeitoMoto**, **Manutenções**, **Histórico de Movimentação**, **Localização**, **LoRa** e **RFID**.
-* Integração com banco **Oracle** via **Entity Framework Core** e migrations.
-* Documentação interativa com **Swagger / OpenAPI**.
-* Filtros em endpoints via **QueryParams** e recursos em **PathParams**.
+---
 
-## Tecnologias
+## 👨‍💻 Integrantes
 
-* **.NET 9.0 Minimal API**
-* **Entity Framework Core** (Oracle)
-* **Swashbuckle** (Swagger UI)
-* **C# 13**
+- **Gabriel Lima Silva - RM556773**
+- **Cauã Marcelo - RM558024**
+- **Marcos Ramalho - RM554611**
 
-## Instalação e Configuração
+---
 
-1. **Pré‑requisitos**:
+## 🏗️ Arquitetura e Decisões de Design
 
-   * .NET 9.0 SDK
-   * Acesso ao servidor Oracle
-   * [JetBrains Rider](https://www.jetbrains.com/rider/)
+A arquitetura deste projeto foi escolhida para ser moderna, performática, escalável e de fácil manutenção, seguindo as melhores práticas do ecossistema .NET.
 
-2. **Clone o repositório**:
+- **Minimal APIs (.NET 9):** Escolhemos Minimal APIs pela sua simplicidade e alto desempenho. Esta abordagem reduz o código repetitivo ("boilerplate") encontrado em arquiteturas mais antigas como MVC, tornando a API mais leve e rápida, ideal para microsserviços e para consumo por aplicações mobile.
 
-   ```bash
-   https://github.com/Byells/LorArchAPI.git
-   ```
+- **Entity Framework Core (Code-First):** Utilizamos o EF Core como ORM para abstrair a comunicação com o banco de dados Oracle. A abordagem "Code-First" com migrations permite que o esquema do banco de dados evolua junto com o código da aplicação, garantindo consistência e facilitando o desenvolvimento e o deploy.
 
-3. **Configure a connection string**:
+- **Endpoints Modulares:** A API foi organizada separando os endpoints por funcionalidade em classes estáticas (ex: `UnidadeEndpoints`, `MotoEndpoints`). Essa estrutura mantém o `Program.cs` limpo e organiza o código de forma lógica e escalável, similar ao padrão de "Controllers".
 
-   * Crie `appsettings.Development.json` na raiz com:
+- **Autenticação JWT (JSON Web Tokens):** Para a segurança, implementamos um sistema de autenticação baseado em tokens JWT. É um padrão de mercado, stateless e seguro, perfeito para proteger APIs que serão consumidas por diferentes clientes, como um aplicativo mobile.
 
-     ```json
-     {
-       "ConnectionStrings": {
-         "OracleDb": "User Id=SEU_USUARIO;Password=SUA_SENHA;Data Source=HOST:1521/SERVICE_NAME"
-       }
-     }
-     ```
+- **Testes de Integração (xUnit):** Adicionamos uma suíte de testes de integração para garantir a qualidade e a confiabilidade dos endpoints principais. Utilizando uma `WebApplicationFactory` com um banco de dados em memória, simulamos requisições HTTP reais para validar o fluxo completo da aplicação, desde o recebimento da requisição até a resposta, garantindo que futuras alterações não quebrem funcionalidades existentes.
 
-4. **Aplicar Migrations**:
+---
 
-   * Pelo Rider: **Tools > Entity Framework > Migrations > Update Database**
-   * Ou no terminal:
+## 🚀 Instalação e Execução
 
-     ```bash
-     dotnet ef database update
-     ```
+### Pré-requisitos
 
-## Executando a API
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download "null")
 
-```bash
-dotnet run
+- Acesso a um servidor de banco de dados Oracle
+
+- Um editor de código ou IDE (JetBrains Rider, Visual Studio, VS Code)
+
+
+### 1. Clone o Repositório
+
+```
+git clone [https://github.com/Byells/LorArchAPI.git](https://github.com/Byells/LorArchAPI.git)
+cd LorArchAPI
 ```
 
-Acesse o Swagger UI em: **[https://localhost:7161/swagger](https://localhost:7161/swagger/index.html)**
+### 2. Configure a Conexão com o Banco
 
-## Rotas e Endpoints Principais
+Crie um arquivo `appsettings.Development.json` na raiz do projeto `LorArchApi` com a sua connection string do Oracle e as configurações do JWT:
+
+```
+{
+  "ConnectionStrings": {
+    "OracleDb": "User Id=SEU_USUARIO;Password=SUA_SENHA;Data Source=ENDERECO_DO_SERVIDOR:1521/SERVICE_NAME"
+  },
+  "Jwt": {
+    "Key": "SuaChaveSuperSecretaDePeloMenos16Caracteres",
+    "Issuer": "https://localhost:7161",
+    "Audience": "https://localhost:7161"
+  }
+}
+```
+
+### 3. Aplique as Migrations
+
+Com o Entity Framework Core Tools instalado (`dotnet tool install --global dotnet-ef`), execute o comando abaixo na pasta do projeto `LorArchApi` para criar as tabelas no banco de dados:
+
+```
+dotnet ef database update
+```
+
+### 4. Execute a API
+
+```
+dotnet run --project LorArchApi
+```
+
+A API estará rodando e o Swagger UI poderá ser acessado em **`https://localhost:7161/swagger/index.html`**.
+
+## ✅ Executando os Testes
+
+O projeto inclui uma suíte de testes de integração para validar os endpoints principais. Para executá-los, navegue até a pasta raiz da solução e rode o seguinte comando:
+
+```
+dotnet test
+```
+
+## 📚 Exemplos de Uso dos Endpoints
+
+> **Novidades**: A nova versão da API contém **Paginação** e **HATEOAS** em seus endpoints!
+
+Todos os endpoints, exceto os de registro e login, são protegidos e exigem um token de autenticação.
+
+### 1. Autenticação
+
+**A. Registrar um novo usuário**
+
+Envie uma requisição `POST` para `/api/auth/register`:
+
+```
+{
+  "email": "usuario@exemplo.com",
+  "password": "Senha@123"
+}
+```
+
+**B. Fazer login e obter um token**
+
+Envie uma requisição `POST` para `/api/auth/login`:
+
+```
+
+{
+  "email": "usuario@exemplo.com",
+  "password": "Senha@123"
+}
+```
+
+A resposta conterá o token JWT, que deverá ser usado nas próximas requisições.
+
+### 2. Acessando um Endpoint Protegido
+
+Para acessar qualquer outro endpoint, coloque na parte de Authorization do Swagger o que retornou do método de login`.
+
+**Exemplo: Listar todas as unidades**
+
+```
+"Authorization: Bearer <TOKEN_JWT>"
+```
 
 ## Observação
 
@@ -161,8 +232,4 @@ Acesse o Swagger UI em: **[https://localhost:7161/swagger](https://localhost:716
 * `PUT    /rfid/{id}`         → Atualiza tag RFID existente
 * `DELETE /rfid/{id}`         → Remove tag RFID
 
-
-
 ---
-
-*Desenvolvido por Gabriel Lima Silva para Advanced Business Development with .NET*

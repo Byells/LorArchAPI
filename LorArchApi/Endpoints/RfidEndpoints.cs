@@ -18,7 +18,8 @@ public static class RfidEndpoints
             .WithTags(RfidTag)
             .Produces<PaginatedResponse<RfidDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar RFID")
-            .WithDescription("Retorna todos os registros RFID paginados, com filtros opcionais.");
+            .WithDescription("Retorna todos os registros RFID paginados, com filtros opcionais.")
+            .RequireAuthorization();
 
         app.MapGet("/rfid/{id:int}", GetRfidById)
             .WithName("GetRfidById")
@@ -26,7 +27,8 @@ public static class RfidEndpoints
             .Produces<RfidDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter RFID por ID")
-            .WithDescription("Retorna o registro RFID correspondente ao `IdRfid` informado.");
+            .WithDescription("Retorna o registro RFID correspondente ao `IdRfid` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/rfid", CreateRfid)
             .WithName("CreateRfid")
@@ -35,7 +37,8 @@ public static class RfidEndpoints
             .Produces<RfidDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar RFID")
-            .WithDescription("Registra um novo tag RFID vinculado a uma moto.");
+            .WithDescription("Registra um novo tag RFID vinculado a uma moto.")
+            .RequireAuthorization();
 
         app.MapPut("/rfid/{id:int}", UpdateRfid)
             .WithName("UpdateRfid")
@@ -45,7 +48,8 @@ public static class RfidEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar RFID")
-            .WithDescription("Atualiza dados de um tag RFID existente.");
+            .WithDescription("Atualiza dados de um tag RFID existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/rfid/{id:int}", DeleteRfid)
             .WithName("DeleteRfid")
@@ -53,7 +57,8 @@ public static class RfidEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir RFID")
-            .WithDescription("Remove o tag RFID especificado.");
+            .WithDescription("Remove o tag RFID especificado.")
+            .RequireAuthorization();
 
         return app;
     }
@@ -73,7 +78,6 @@ public static class RfidEndpoints
         if (motoId.HasValue)
             query = query.Where(r => r.IdMoto == motoId.Value);
         
-        // Corrigido: Converte o número para string antes de usar 'Contains'
         if (!string.IsNullOrWhiteSpace(numeroRfid))
             query = query.Where(r => r.NumeroRfid.ToString().Contains(numeroRfid));
 
@@ -158,7 +162,6 @@ public static class RfidEndpoints
     private static RfidDto ToDto(Rfid rfid) => new()
     {
         IdRfid = rfid.IdRfid,
-        // Corrigido: Converte o número para string no DTO
         NumeroRfid = rfid.NumeroRfid.ToString(),
         IdMoto = rfid.IdMoto,
         Links = new List<Link>

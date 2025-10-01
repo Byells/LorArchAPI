@@ -18,7 +18,8 @@ public static class CidadeEndpoints
             .WithTags(CidadesTag)
             .Produces<PaginatedResponse<CidadeDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar cidades")
-            .WithDescription("Retorna cidades paginadas, opcionalmente filtradas por `nome` ou `estadoId`.");
+            .WithDescription("Retorna cidades paginadas, opcionalmente filtradas por `nome` ou `estadoId`.")
+            .RequireAuthorization();
 
         app.MapGet("/cidades/{id:int}", GetCidadeById)
             .WithName("GetCidadeById")
@@ -26,7 +27,8 @@ public static class CidadeEndpoints
             .Produces<CidadeDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter cidade por ID")
-            .WithDescription("Retorna a cidade correspondente ao `IdCidade` informado.");
+            .WithDescription("Retorna a cidade correspondente ao `IdCidade` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/cidades", CreateCidade)
             .WithName("CreateCidade")
@@ -35,7 +37,8 @@ public static class CidadeEndpoints
             .Produces<CidadeDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar cidade")
-            .WithDescription("Cria uma nova cidade vinculada a um estado existente.");
+            .WithDescription("Cria uma nova cidade vinculada a um estado existente.")
+            .RequireAuthorization();
 
         app.MapPut("/cidades/{id:int}", UpdateCidade)
             .WithName("UpdateCidade")
@@ -45,7 +48,8 @@ public static class CidadeEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar cidade")
-            .WithDescription("Atualiza nome ou estado de uma cidade existente.");
+            .WithDescription("Atualiza nome ou estado de uma cidade existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/cidades/{id:int}", DeleteCidade)
             .WithName("DeleteCidade")
@@ -53,7 +57,8 @@ public static class CidadeEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir cidade")
-            .WithDescription("Remove a cidade especificada.");
+            .WithDescription("Remove a cidade especificada.")
+            .RequireAuthorization();
 
         return app;
     }

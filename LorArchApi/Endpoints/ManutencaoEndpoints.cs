@@ -18,7 +18,8 @@ public static class ManutencaoEndpoints
             .WithTags(ManutencoesTag)
             .Produces<PaginatedResponse<ManutencaoDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar manutenções")
-            .WithDescription("Retorna todas as manutenções paginadas, com filtros opcionais.");
+            .WithDescription("Retorna todas as manutenções paginadas, com filtros opcionais.")
+            .RequireAuthorization();
 
         app.MapGet("/manutencoes/{id:int}", GetManutencaoById)
             .WithName("GetManutencaoById")
@@ -26,7 +27,8 @@ public static class ManutencaoEndpoints
             .Produces<ManutencaoDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter manutenção por ID")
-            .WithDescription("Retorna a manutenção correspondente ao `IdManutencao` informado.");
+            .WithDescription("Retorna a manutenção correspondente ao `IdManutencao` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/manutencoes", CreateManutencao)
             .WithName("CreateManutencao")
@@ -35,7 +37,8 @@ public static class ManutencaoEndpoints
             .Produces<ManutencaoDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar manutenção")
-            .WithDescription("Cria um novo registro de manutenção para uma moto.");
+            .WithDescription("Cria um novo registro de manutenção para uma moto.")
+            .RequireAuthorization();
 
         app.MapPut("/manutencoes/{id:int}", UpdateManutencao)
             .WithName("UpdateManutencao")
@@ -45,7 +48,8 @@ public static class ManutencaoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar manutenção")
-            .WithDescription("Atualiza um registro de manutenção existente.");
+            .WithDescription("Atualiza um registro de manutenção existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/manutencoes/{id:int}", DeleteManutencao)
             .WithName("DeleteManutencao")
@@ -53,7 +57,8 @@ public static class ManutencaoEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir manutenção")
-            .WithDescription("Remove o registro de manutenção especificado.");
+            .WithDescription("Remove o registro de manutenção especificado.")
+            .RequireAuthorization();
 
         return app;
     }

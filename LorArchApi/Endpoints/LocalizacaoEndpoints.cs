@@ -18,7 +18,8 @@ public static class LocalizacaoEndpoints
             .WithTags(LocalizacoesTag)
             .Produces<PaginatedResponse<LocalizacaoDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar localizações")
-            .WithDescription("Retorna todas as localizações paginadas, com filtros opcionais.");
+            .WithDescription("Retorna todas as localizações paginadas, com filtros opcionais.")
+            .RequireAuthorization();
 
         app.MapGet("/localizacoes/{id:int}", GetLocalizacaoById)
             .WithName("GetLocalizacaoById")
@@ -26,7 +27,8 @@ public static class LocalizacaoEndpoints
             .Produces<LocalizacaoDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter localização por ID")
-            .WithDescription("Retorna a localização correspondente ao IdLocalizacao informado.");
+            .WithDescription("Retorna a localização correspondente ao IdLocalizacao informado.")
+            .RequireAuthorization();
 
         app.MapPost("/localizacoes", CreateLocalizacao)
             .WithName("CreateLocalizacao")
@@ -35,7 +37,8 @@ public static class LocalizacaoEndpoints
             .Produces<LocalizacaoDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar localização")
-            .WithDescription("Registra a localização de uma moto em um setor.");
+            .WithDescription("Registra a localização de uma moto em um setor.")
+            .RequireAuthorization();
 
         app.MapPut("/localizacoes/{id:int}", UpdateLocalizacao)
             .WithName("UpdateLocalizacao")
@@ -45,7 +48,8 @@ public static class LocalizacaoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar localização")
-            .WithDescription("Atualiza dados de uma localização existente.");
+            .WithDescription("Atualiza dados de uma localização existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/localizacoes/{id:int}", DeleteLocalizacao)
             .WithName("DeleteLocalizacao")
@@ -53,7 +57,8 @@ public static class LocalizacaoEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir localização")
-            .WithDescription("Remove a localização especificada.");
+            .WithDescription("Remove a localização especificada.")
+            .RequireAuthorization();
 
         return app;
     }

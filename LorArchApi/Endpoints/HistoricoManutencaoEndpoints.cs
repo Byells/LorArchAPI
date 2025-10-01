@@ -18,7 +18,8 @@ public static class HistoricoManutencaoEndpoints
             .WithTags(HistoricosTag)
             .Produces<PaginatedResponse<HistoricoManutencaoDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar histórico de movimentações")
-            .WithDescription("Retorna movimentações paginadas de motos entre setores, com filtros opcionais.");
+            .WithDescription("Retorna movimentações paginadas de motos entre setores, com filtros opcionais.")
+            .RequireAuthorization();
 
         app.MapGet("/historicos/{id:int}", GetHistoricoById)
             .WithName("GetHistoricoById")
@@ -26,7 +27,8 @@ public static class HistoricoManutencaoEndpoints
             .Produces<HistoricoManutencaoDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter movimentação por ID")
-            .WithDescription("Retorna a movimentação correspondente ao IdMovimentacao informado.");
+            .WithDescription("Retorna a movimentação correspondente ao IdMovimentacao informado.")
+            .RequireAuthorization();
 
         app.MapPost("/historicos", CreateHistorico)
             .WithName("CreateHistorico")
@@ -35,7 +37,8 @@ public static class HistoricoManutencaoEndpoints
             .Produces<HistoricoManutencaoDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar movimentação")
-            .WithDescription("Registra a movimentação de uma moto entre setores.");
+            .WithDescription("Registra a movimentação de uma moto entre setores.")
+            .RequireAuthorization();
 
         app.MapPut("/historicos/{id:int}", UpdateHistorico)
             .WithName("UpdateHistorico")
@@ -45,7 +48,8 @@ public static class HistoricoManutencaoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar movimentação")
-            .WithDescription("Atualiza dados de uma movimentação existente.");
+            .WithDescription("Atualiza dados de uma movimentação existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/historicos/{id:int}", DeleteHistorico)
             .WithName("DeleteHistorico")
@@ -53,7 +57,8 @@ public static class HistoricoManutencaoEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir movimentação")
-            .WithDescription("Remove a movimentação especificada.");
+            .WithDescription("Remove a movimentação especificada.")
+            .RequireAuthorization();
 
         return app;
     }

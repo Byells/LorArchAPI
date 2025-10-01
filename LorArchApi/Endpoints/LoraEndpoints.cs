@@ -18,7 +18,8 @@ public static class LoraEndpoints
             .WithTags(LoraTag)
             .Produces<PaginatedResponse<LoraDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar LoRa")
-            .WithDescription("Retorna todos os registros de LoRa paginados, com filtros opcionais.");
+            .WithDescription("Retorna todos os registros de LoRa paginados, com filtros opcionais.")
+            .RequireAuthorization();
 
         app.MapGet("/lora/{id:int}", GetLoraById)
             .WithName("GetLoraById")
@@ -26,7 +27,8 @@ public static class LoraEndpoints
             .Produces<LoraDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter LoRa por ID")
-            .WithDescription("Retorna o registro de LoRa correspondente ao `IdLora` informado.");
+            .WithDescription("Retorna o registro de LoRa correspondente ao `IdLora` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/lora", CreateLora)
             .WithName("CreateLora")
@@ -35,7 +37,8 @@ public static class LoraEndpoints
             .Produces<LoraDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar LoRa")
-            .WithDescription("Registra um novo dispositivo LoRa vinculado a uma moto.");
+            .WithDescription("Registra um novo dispositivo LoRa vinculado a uma moto.")
+            .RequireAuthorization();
 
         app.MapPut("/lora/{id:int}", UpdateLora)
             .WithName("UpdateLora")
@@ -45,7 +48,8 @@ public static class LoraEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar LoRa")
-            .WithDescription("Atualiza dados de um dispositivo LoRa existente.");
+            .WithDescription("Atualiza dados de um dispositivo LoRa existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/lora/{id:int}", DeleteLora)
             .WithName("DeleteLora")
@@ -53,7 +57,8 @@ public static class LoraEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir LoRa")
-            .WithDescription("Remove o dispositivo LoRa especificado.");
+            .WithDescription("Remove o dispositivo LoRa especificado.")
+            .RequireAuthorization();
 
         return app;
     }
@@ -75,8 +80,6 @@ public static class LoraEndpoints
         
         if (!string.IsNullOrWhiteSpace(numeroLora))
         {
-            // Corrigido: Converte a propriedade numérica para string para a busca.
-            // EF Core consegue traduzir esta operação para SQL.
             query = query.Where(l => l.NumeroLora.ToString().Contains(numeroLora));
         }
 

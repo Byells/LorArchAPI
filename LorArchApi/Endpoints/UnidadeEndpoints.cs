@@ -18,7 +18,9 @@ public static class UnidadeEndpoints
             .WithTags(UnidadesTag)
             .Produces<PaginatedResponse<UnidadeDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar unidades")
-            .WithDescription("Retorna todas as unidades paginadas, opcionalmente filtradas por `cidadeId` ou por `nome`.");
+            .WithDescription("Retorna todas as unidades paginadas, opcionalmente filtradas por `cidadeId` ou por `nome`.")
+            .RequireAuthorization();
+
 
         app.MapGet("/unidades/{id:int}", GetUnidadeById)
             .WithName("GetUnidadeById")
@@ -26,7 +28,8 @@ public static class UnidadeEndpoints
             .Produces<UnidadeDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter unidade por ID")
-            .WithDescription("Retorna a unidade correspondente ao `IdUnidade` informado.");
+            .WithDescription("Retorna a unidade correspondente ao `IdUnidade` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/unidades", CreateUnidade)
             .WithName("CreateUnidade")
@@ -35,7 +38,8 @@ public static class UnidadeEndpoints
             .Produces<UnidadeDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar unidade")
-            .WithDescription("Cria uma nova unidade vinculada a uma cidade existente.");
+            .WithDescription("Cria uma nova unidade vinculada a uma cidade existente.")
+            .RequireAuthorization();
 
         app.MapPut("/unidades/{id:int}", UpdateUnidade)
             .WithName("UpdateUnidade")
@@ -45,7 +49,8 @@ public static class UnidadeEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar unidade")
-            .WithDescription("Atualiza o nome ou cidade de uma unidade existente.");
+            .WithDescription("Atualiza o nome ou cidade de uma unidade existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/unidades/{id:int}", DeleteUnidade)
             .WithName("DeleteUnidade")
@@ -53,7 +58,8 @@ public static class UnidadeEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir unidade")
-            .WithDescription("Remove a unidade especificada.");
+            .WithDescription("Remove a unidade especificada.")
+            .RequireAuthorization();
 
         return app;
     }

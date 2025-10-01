@@ -18,7 +18,8 @@ public static class SetorEndpoints
             .WithTags(SetoresTag)
             .Produces<PaginatedResponse<SetorDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar setores")
-            .WithDescription("Retorna todos os setores paginados, opcionalmente filtrados por `unidadeId` ou `nome`.");
+            .WithDescription("Retorna todos os setores paginados, opcionalmente filtrados por `unidadeId` ou `nome`.")
+            .RequireAuthorization();
 
         app.MapGet("/setores/{id:int}", GetSetorById)
             .WithName("GetSetorById")
@@ -26,7 +27,8 @@ public static class SetorEndpoints
             .Produces<SetorDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter setor por ID")
-            .WithDescription("Retorna o setor correspondente ao `IdSetor` informado.");
+            .WithDescription("Retorna o setor correspondente ao `IdSetor` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/setores", CreateSetor)
             .WithName("CreateSetor")
@@ -35,7 +37,8 @@ public static class SetorEndpoints
             .Produces<SetorDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar setor")
-            .WithDescription("Cria um novo setor vinculado a uma unidade existente.");
+            .WithDescription("Cria um novo setor vinculado a uma unidade existente.")
+            .RequireAuthorization();
 
         app.MapPut("/setores/{id:int}", UpdateSetor)
             .WithName("UpdateSetor")
@@ -45,7 +48,8 @@ public static class SetorEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar setor")
-            .WithDescription("Atualiza o nome ou unidade de um setor existente.");
+            .WithDescription("Atualiza o nome ou unidade de um setor existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/setores/{id:int}", DeleteSetor)
             .WithName("DeleteSetor")
@@ -53,7 +57,8 @@ public static class SetorEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir setor")
-            .WithDescription("Remove o setor especificado.");
+            .WithDescription("Remove o setor especificado.")
+            .RequireAuthorization();
 
         return app;
     }

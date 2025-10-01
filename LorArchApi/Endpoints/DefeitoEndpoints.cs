@@ -18,7 +18,8 @@ public static class DefeitoEndpoints
             .WithTags(DefeitosTag)
             .Produces<PaginatedResponse<DefeitoDto>>(StatusCodes.Status200OK)
             .WithSummary("Listar defeitos")
-            .WithDescription("Retorna defeitos paginados, opcionalmente filtrados por `nome`.");
+            .WithDescription("Retorna defeitos paginados, opcionalmente filtrados por `nome`.")
+            .RequireAuthorization();
 
         app.MapGet("/defeitos/{id:int}", GetDefeitoById)
             .WithName("GetDefeitoById")
@@ -26,7 +27,8 @@ public static class DefeitoEndpoints
             .Produces<DefeitoDto>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Obter defeito por ID")
-            .WithDescription("Retorna o defeito correspondente ao `IdDefeito` informado.");
+            .WithDescription("Retorna o defeito correspondente ao `IdDefeito` informado.")
+            .RequireAuthorization();
 
         app.MapPost("/defeitos", CreateDefeito)
             .WithName("CreateDefeito")
@@ -35,7 +37,8 @@ public static class DefeitoEndpoints
             .Produces<DefeitoDto>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Criar defeito")
-            .WithDescription("Cria um novo defeito.");
+            .WithDescription("Cria um novo defeito.")
+            .RequireAuthorization();
 
         app.MapPut("/defeitos/{id:int}", UpdateDefeito)
             .WithName("UpdateDefeito")
@@ -45,7 +48,8 @@ public static class DefeitoEndpoints
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Atualizar defeito")
-            .WithDescription("Atualiza nome e descrição de um defeito existente.");
+            .WithDescription("Atualiza nome e descrição de um defeito existente.")
+            .RequireAuthorization();
 
         app.MapDelete("/defeitos/{id:int}", DeleteDefeito)
             .WithName("DeleteDefeito")
@@ -53,7 +57,8 @@ public static class DefeitoEndpoints
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
             .WithSummary("Excluir defeito")
-            .WithDescription("Remove o defeito especificado.");
+            .WithDescription("Remove o defeito especificado.")
+            .RequireAuthorization();
 
         return app;
     }
