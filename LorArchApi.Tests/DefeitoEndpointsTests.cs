@@ -21,7 +21,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task GetDefeitoById_Ok()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -34,7 +34,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var response = await client.GetAsync("/defeitos/1");
 
@@ -47,8 +47,8 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task GetDefeitoById_NotFound()
         {
-            await using var application = new LorArchApiApplication();
-            var client = application.CreateClient();
+            await using var application = new CustomWebApplicationFactory();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var response = await client.GetAsync("/defeitos/99");
 
@@ -58,7 +58,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task GetDefeitos_List()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -75,7 +75,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var response = await client.GetFromJsonAsync<PaginatedResponse<DefeitoDto>>("/defeitos");
 
@@ -86,8 +86,8 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task CreateDefeito_Created()
         {
-            await using var application = new LorArchApiApplication();
-            var client = application.CreateClient();
+            await using var application = new CustomWebApplicationFactory();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var novoDefeito = new DefeitoInputModel
             {
@@ -106,7 +106,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task UpdateDefeito_NoContent()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -119,7 +119,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var defeitoAtualizado = new DefeitoInputModel
             {
@@ -137,7 +137,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task DeleteDefeito_NoContent()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -150,7 +150,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var response = await client.DeleteAsync("/defeitos/1");
 

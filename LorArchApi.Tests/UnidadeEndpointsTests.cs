@@ -27,14 +27,14 @@ public class UnidadeEndpointsTests
     [Fact]
     public async Task GetUnidadeById_Ok()
     {
-        await using var application = new LorArchApiApplication();
+        await using var application = new CustomWebApplicationFactory();
         using (var scope = application.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             db.Unidades.Add(new Unidade { IdUnidade = 1, Nome = "Sede Teste", IdCidade = 1 });
             await db.SaveChangesAsync();
         }
-        var client = application.CreateClient();
+        var client = await application.CreateAuthenticatedClientAsync();
 
         var response = await client.GetAsync("/unidades/1");
 
@@ -47,8 +47,8 @@ public class UnidadeEndpointsTests
     [Fact]
     public async Task GetUnidadeById_NotFound()
     {
-        await using var application = new LorArchApiApplication();
-        var client = application.CreateClient();
+        await using var application = new CustomWebApplicationFactory();
+        var client = await application.CreateAuthenticatedClientAsync();
 
         var response = await client.GetAsync("/unidades/99");
 
@@ -58,7 +58,7 @@ public class UnidadeEndpointsTests
     [Fact]
     public async Task GetUnidades_List()
     {
-        await using var application = new LorArchApiApplication();
+        await using var application = new CustomWebApplicationFactory();
         using (var scope = application.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -66,7 +66,7 @@ public class UnidadeEndpointsTests
             db.Unidades.Add(new Unidade { IdUnidade = 2, Nome = "Unidade B", IdCidade = 1 });
             await db.SaveChangesAsync();
         }
-        var client = application.CreateClient();
+        var client = await application.CreateAuthenticatedClientAsync();
 
         var response = await client.GetFromJsonAsync<PaginatedResponse<UnidadeDto>>("/unidades");
 
@@ -77,14 +77,14 @@ public class UnidadeEndpointsTests
     [Fact]
     public async Task CreateUnidade_Created()
     {
-        await using var application = new LorArchApiApplication();
+        await using var application = new CustomWebApplicationFactory();
         using (var scope = application.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             db.Cidades.Add(new Cidade { IdCidade = 1, Nome = "Cidade Padrão", IdEstado = 1 });
             await db.SaveChangesAsync();
         }
-        var client = application.CreateClient();
+        var client = await application.CreateAuthenticatedClientAsync();
         var novaUnidade = new UnidadeInputModel { Nome = "Nova Unidade", IdCidade = 1 };
         var content = new StringContent(JsonSerializer.Serialize(novaUnidade), Encoding.UTF8, "application/json");
 
@@ -97,7 +97,7 @@ public class UnidadeEndpointsTests
     [Fact]
     public async Task UpdateUnidade_NoContent()
     {
-        await using var application = new LorArchApiApplication();
+        await using var application = new CustomWebApplicationFactory();
         using (var scope = application.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -105,7 +105,7 @@ public class UnidadeEndpointsTests
             db.Unidades.Add(new Unidade { IdUnidade = 1, Nome = "Nome Antigo", IdCidade = 1 });
             await db.SaveChangesAsync();
         }
-        var client = application.CreateClient();
+        var client = await application.CreateAuthenticatedClientAsync();
         var unidadeAtualizada = new UnidadeInputModel { Nome = "Nome Novo", IdCidade = 1 };
         var content = new StringContent(JsonSerializer.Serialize(unidadeAtualizada), Encoding.UTF8, "application/json");
 
@@ -117,14 +117,14 @@ public class UnidadeEndpointsTests
     [Fact]
     public async Task DeleteUnidade_NoContent()
     {
-        await using var application = new LorArchApiApplication();
+        await using var application = new CustomWebApplicationFactory();
         using (var scope = application.Services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             db.Unidades.Add(new Unidade { IdUnidade = 1, Nome = "Para Deletar", IdCidade = 1 });
             await db.SaveChangesAsync();
         }
-        var client = application.CreateClient();
+        var client = await application.CreateAuthenticatedClientAsync();
 
         var response = await client.DeleteAsync("/unidades/1");
 
@@ -134,26 +134,3 @@ public class UnidadeEndpointsTests
     }
 }
 
-class LorArchApiApplication : WebApplicationFactory<Program>
-{
-    private readonly string _dbName = $"BancoDeTestes-{Guid.NewGuid()}";
-    
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.UseEnvironment("Testing");
-
-        builder.ConfigureServices(services =>
-        {
-            var dbContextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>));
-            if (dbContextDescriptor != null)
-            {
-                services.Remove(dbContextDescriptor);
-            }
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseInMemoryDatabase(_dbName);
-            });
-        });
-    }
-}

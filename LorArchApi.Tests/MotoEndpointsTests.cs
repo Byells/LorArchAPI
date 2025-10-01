@@ -26,7 +26,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task GetMotoById_Ok()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -44,7 +44,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var response = await client.GetAsync("/motos/1");
 
@@ -57,8 +57,8 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task GetMotoById_NotFound()
         {
-            await using var application = new LorArchApiApplication();
-            var client = application.CreateClient();
+            await using var application = new CustomWebApplicationFactory();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var response = await client.GetAsync("/motos/99");
 
@@ -68,7 +68,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task GetMotos_List()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -96,7 +96,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var response = await client.GetFromJsonAsync<PaginatedResponse<MotoDto>>("/motos");
 
@@ -107,7 +107,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task CreateMoto_Created()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -115,7 +115,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
             var novaMoto = new MotoInputModel
             {
                 Modelo = "Kawasaki",
@@ -134,7 +134,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task UpdateMoto_NoContent()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -152,7 +152,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
             var motoAtualizada = new MotoInputModel
             {
                 Modelo = "Nova",
@@ -170,7 +170,7 @@ namespace LorArchApi.Tests
         [Fact]
         public async Task DeleteMoto_NoContent()
         {
-            await using var application = new LorArchApiApplication();
+            await using var application = new CustomWebApplicationFactory();
             using (var scope = application.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -188,7 +188,7 @@ namespace LorArchApi.Tests
                 await db.SaveChangesAsync();
             }
 
-            var client = application.CreateClient();
+            var client = await application.CreateAuthenticatedClientAsync();
 
             var response = await client.DeleteAsync("/motos/1");
 
